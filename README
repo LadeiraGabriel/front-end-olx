@@ -1,0 +1,54 @@
+
+
+router.get("/", allAdsControlle);
+
+//===================================================================
+
+//===================================================================
+//AUTH CONTROLLERS
+//===================================================================
+router.post("/cadastrar", createUsers);
+router.get("/optinemail/:token", optionConfirmationEmail);
+
+router.post("/forgot-password", iForgotMyPassword);
+router.post("/redeem-password", privateRoute, createNewPassword);
+router.post("/login", loginUser);
+//===================================================================
+
+//===================================================================
+//USER CONTROLLERS
+//===================================================================
+
+router.get("/user", privateRoute, infoUser);
+router.put("/user", privateRoute, updateInfoUser);
+
+router.post(
+  "/user/upload/photo",
+  privateRoute,
+  upload.single("profile"),
+  addPhotoProfile
+);
+
+router.get("/user/ads", privateRoute, adsOfUser);
+
+//===================================================================
+
+//===================================================================
+//ADS CONTROLLERS
+//===================================================================
+router.post(
+  "/ads",
+  privateRoute,
+  upload.fields([{ name: "photosAds", maxCount: 5 }]),
+  createAdsController
+);
+
+router.put("/ads", privateRoute, updateAdsController);
+
+router.delete("/ads", privateRoute, deleteAdsController);
+
+router.get("/ads", allAdsControlle);
+
+router.get("/ads/category/:category", adsByCategory);
+
+router.get("/ads/user/:id", adsByUser);
